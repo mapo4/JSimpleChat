@@ -83,7 +83,7 @@ public class TabContentController implements Initializable{
 
     private void configureMessageTextField(){
         messageTextField.setOnAction(event -> {
-            String message = messageTextField.getText();
+            String message = client.getName()+": "+messageTextField.getText();
             network.send(message);
             messageTextField.clear();
         });
