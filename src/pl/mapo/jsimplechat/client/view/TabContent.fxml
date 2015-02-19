@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Tab fx:id="tab" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="pl.mapo.jsimplechat.client.controller.TabContentController">
+<BorderPane >
+         <center>
+            <TextArea editable="false" fx:id="messageHistoryTextArea" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <TextField fx:id="messageTextField" BorderPane.alignment="CENTER" />
+         </bottom>
+</BorderPane>
+</Tab>

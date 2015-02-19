@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0"
+        prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="pl.mapo.jsimplechat.client.controller.ConnectPaneController">
+   <center>
+      <VBox prefHeight="220.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="tabNameTextField" promptText="Name tab" />
+            <TextField fx:id="addressTextField" promptText="Address IP" />
+            <TextField fx:id="portTextField" promptText="Port" />
+            <Button fx:id="sendButton" mnemonicParsing="false" text="Button" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
