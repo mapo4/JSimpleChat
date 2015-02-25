@@ -8,10 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import pl.mapo.jsimplechat.client.TabContent;
-import pl.mapo.jsimplechat.client.model.Client;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +24,6 @@ public class ClientPaneController implements Initializable{
 
     private Thread thread;
     private volatile boolean running;
-    private BorderPane borderPane;
     private Tab tab;
 
 
@@ -39,21 +35,23 @@ public class ClientPaneController implements Initializable{
     }
 
 
-
-
     private void configureMenu() {
         connectServerMenuItem.setOnAction(event -> {
             createConnectWindow();
-            running = true;
+
             thread = new Thread("Menu") {
                 @Override
                 public void run() {
+                    running = true;
+
                     while (running){
                         running = ConnectPaneController.isRunning();
+
                     }
                     Platform.runLater(() -> {
-                        createNewTab(ConnectPaneController.getTabName());
+                        createNewTab();
                     });
+
                 }
             };
             thread.start();
@@ -66,7 +64,8 @@ public class ClientPaneController implements Initializable{
             Parent root = FXMLLoader.load(getClass().getResource("/pl/mapo/jsimplechat/client/view/ConnectPane.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Connect");
-            stage.setScene(new Scene(root, 300, 150));
+            stage.setResizable(false);
+            stage.setScene(new Scene(root, 300, 170));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,7 +73,7 @@ public class ClientPaneController implements Initializable{
 
     }
 
-    private void createNewTab(String tabName){
+    private void createNewTab(){
 
             try {
                 tab = FXMLLoader.load(getClass().getResource("/pl/mapo/jsimplechat/client/view/TabContent.fxml"));

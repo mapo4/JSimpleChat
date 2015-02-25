@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0"
-        prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="pl.mapo.jsimplechat.client.controller.ConnectPaneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.mapo.jsimplechat.client.controller.ConnectPaneController">
    <center>
       <VBox prefHeight="220.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="tabNameTextField" promptText="Name tab" />
-             <TextField fx:id="nameTextField" promptText="Nickname" />
-            <TextField fx:id="addressTextField" promptText="Address IP" />
-            <TextField fx:id="portTextField" promptText="Port" />
-            <Button fx:id="sendButton" mnemonicParsing="false" text="Button" />
+            <TextField fx:id="tabNameTextField" promptText="Name tab">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></TextField>
+             <TextField fx:id="nameTextField" promptText="Nickname">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></TextField>
+            <TextField fx:id="addressTextField" promptText="Address IP">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></TextField>
+            <TextField fx:id="portTextField" promptText="Port">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></TextField>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
+   <bottom>
+      <Button fx:id="sendButton" mnemonicParsing="false" text="Connect" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" />
+         </BorderPane.margin></Button>
+   </bottom>
 </BorderPane>
