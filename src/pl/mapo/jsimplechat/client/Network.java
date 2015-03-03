@@ -55,7 +55,6 @@ public class Network{
             public void run() {
 
                 try {
-
                     toServer.writeBytes(message + "\n");
                     toServer.flush();
                 } catch (IOException e) {
@@ -70,7 +69,7 @@ public class Network{
 
         try {
             if ((message = fromServer.readLine()) != null) {
-                return message;
+                return Message.unpack(message);
             }
 
 

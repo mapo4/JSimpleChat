@@ -1,5 +1,7 @@
 package pl.mapo.jsimplechat.server;
 
+import pl.mapo.jsimplechat.client.*;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -39,7 +41,7 @@ public class Server extends Thread {
                         while ((msg = fromClient.readLine()) != null) {
 
 
-                            System.out.println("Received: " + msg);
+                            System.out.println("Received: " + Message.unpack(msg));
                             sendToAll(msg);
 
                         }
