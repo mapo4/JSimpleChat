@@ -40,11 +40,9 @@ public class TabContentController implements Initializable{
     }
 
 
-
-
     private void establishConnection(){
         String serverAddress = client.getServerAddress();
-        int serverPort = client.getServerPort();
+        int serverPort = Integer.parseInt(client.getServerPort());
         network = new Network(serverAddress, serverPort);
 
         boolean connection = network.openConnection();
@@ -59,7 +57,7 @@ public class TabContentController implements Initializable{
 
 
     private void configureTab(){
-        tab.setText(client.getName());
+        tab.setText(client.getServerName());
         tab.setOnClosed(event -> {
             network.close();
 

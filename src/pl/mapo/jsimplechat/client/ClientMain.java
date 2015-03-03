@@ -14,7 +14,7 @@ public class ClientMain extends Application {
         final String APP_NAME = "JSimpleChat";
         stage.setTitle(APP_NAME);
         Parent root = FXMLLoader.load(getClass().getResource("view/ClientPane.fxml"));
-        Scene scene = new Scene(root,600,450);
+        Scene scene = new Scene(root,800,600);
 
         stage.setScene(scene);
         stage.show();

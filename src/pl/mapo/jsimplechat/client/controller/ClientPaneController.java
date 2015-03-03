@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.stage.Stage;
+import pl.mapo.jsimplechat.client.model.Client;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,6 +25,7 @@ public class ClientPaneController implements Initializable{
 
     private Thread thread;
     private volatile boolean running;
+    private volatile boolean canceled;
     private Tab tab;
 
 
@@ -31,9 +33,7 @@ public class ClientPaneController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         configureMenu();
 
-
     }
-
 
     private void configureMenu() {
         connectServerMenuItem.setOnAction(event -> {
@@ -43,19 +43,38 @@ public class ClientPaneController implements Initializable{
                 @Override
                 public void run() {
                     running = true;
+                    canceled = false;
 
                     while (running){
                         running = ConnectPaneController.isRunning();
+                        canceled = ConnectPaneController.isCanceled();
 
                     }
-                    Platform.runLater(() -> {
-                        createNewTab();
-                    });
+
+                    if (!canceled) {
+                        Client client = ConnectPaneController.getClient();
+
+                        Platform.runLater(() -> {
+                            if (isClientCorrectToConnect(client)) createNewTab();
+                        });
+                    }
+
 
                 }
             };
             thread.start();
         });
+    }
+
+    private boolean isClientCorrectToConnect(Client client){
+        if (client.getServerName() == ""){
+            return false;
+        } else if (client.getServerAddress() == ""){
+            return false;
+        } else if (client.getServerPort() == ""){
+            return false;
+        }
+        return true;
     }
 
 
@@ -65,7 +84,7 @@ public class ClientPaneController implements Initializable{
             Stage stage = new Stage();
             stage.setTitle("Connect");
             stage.setResizable(false);
-            stage.setScene(new Scene(root, 300, 170));
+            stage.setScene(new Scene(root, 600, 400));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,7 +93,6 @@ public class ClientPaneController implements Initializable{
     }
 
     private void createNewTab(){
-
             try {
                 tab = FXMLLoader.load(getClass().getResource("/pl/mapo/jsimplechat/client/view/TabContent.fxml"));
             } catch (IOException e1) {
