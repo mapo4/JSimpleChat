@@ -15,7 +15,6 @@ import pl.mapo.jsimplechat.lib.Message;
 
 import java.net.URL;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class TabContentController implements Initializable{
@@ -113,3 +112,4 @@ public class TabContentController implements Initializable{
 
     }
 }
+

@@ -1,8 +1,5 @@
 package pl.mapo.jsimplechat.client;
 
-import javafx.application.Platform;
-import pl.mapo.jsimplechat.client.controller.TabContentController;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
