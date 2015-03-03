@@ -14,5 +14,8 @@
          <bottom>
             <TextField fx:id="messageTextField" BorderPane.alignment="CENTER" />
          </bottom>
+        <right>
+            <ListView fx:id="clientListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+        </right>
 </BorderPane>
 </Tab>
