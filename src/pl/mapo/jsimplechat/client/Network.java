@@ -69,7 +69,7 @@ public class Network{
 
         try {
             if ((message = fromServer.readLine()) != null) {
-                return Message.unpack(message);
+                return message;
             }
 
 

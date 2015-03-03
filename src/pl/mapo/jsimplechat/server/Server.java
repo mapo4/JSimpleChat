@@ -1,9 +1,11 @@
 package pl.mapo.jsimplechat.server;
 
 import pl.mapo.jsimplechat.client.*;
+import sun.font.Type1GlyphMapper;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.stream.Collectors;
 
 
 public class Server extends Thread {
@@ -27,6 +29,7 @@ public class Server extends Thread {
     @Override
     public void run() {
         receive();
+        manageClients();
     }
 
     private void receive(){
@@ -39,11 +42,7 @@ public class Server extends Thread {
                         String msg;
 
                         while ((msg = fromClient.readLine()) != null) {
-
-
-                            System.out.println("Received: " + Message.unpack(msg));
-                            sendToAll(msg);
-
+                            manageMessage(msg);
                         }
 
                         fromClient.close();
@@ -58,6 +57,49 @@ public class Server extends Thread {
             }
         };
         receive.start();
+    }
+
+    private void manageMessage(String message){
+     if (Message.typeOf(message) == Message.Type.MESSAGE){
+         sendToAll(message);
+         System.out.println("Received: " + Message.unpack(message));
+     } else if (Message.typeOf(message) == Message.Type.CONNECTION){
+         //System.out.println(ServerMain.clientsOnline.size());
+         ServerMain.clientsOnline.add(Message.unpack(message));
+     } else if (Message.typeOf(message) == Message.Type.DISCONNECT){
+
+         ServerMain.clientsOnline = ServerMain.clientsOnline.stream()
+                 .filter(t -> !t.startsWith(Message.unpack(message))).collect(Collectors.toList());
+     }
+
+    }
+
+    private void manageClients(){
+        new Thread("manageClients"){
+
+            @Override
+            public void run() {
+                while(true){
+                    if (ServerMain.clientsOnline.size() < 0) return;
+
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    String message = "";
+                    for (int i=0; i<(ServerMain.clientsOnline.size()-1);i++){
+                        message += ServerMain.clientsOnline.get(i)+"/n/";
+                    }
+                    int lastIndex = ServerMain.clientsOnline.size()-1;
+                    message += ServerMain.clientsOnline.get(lastIndex);
+                    sendToAll(Message.pack(message, Message.Type.USERS));
+                    System.out.println(Message.pack(message, Message.Type.USERS));
+
+                }
+            }
+        }.start();
+
     }
 
     public void sendToAll(String message){

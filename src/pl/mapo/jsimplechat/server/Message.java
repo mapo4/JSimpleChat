@@ -2,7 +2,7 @@ package pl.mapo.jsimplechat.server;
 
 public class Message {
     public enum Type {
-        MESSAGE, CONNECTION
+        MESSAGE, CONNECTION, DISCONNECT, USERS, NOTHING
     }
 
     public static String pack(String message, Type typeOfMessage){
@@ -13,6 +13,12 @@ public class Message {
                 break;
             case CONNECTION:
                 text = "/c/"+message+"/e/";
+                break;
+            case USERS:
+                text = "/u/"+message+"/e/";
+                break;
+            case DISCONNECT:
+                text = "/d/"+message+"/e/";
                 break;
             default:
                 text="";
@@ -27,9 +33,33 @@ public class Message {
             message = message.substring(3);
             message = message.split("/e/")[0];
             return message;
+        } else if (message.startsWith("/c/")){
+            return message.split("/c/|/e/")[1];
+        } else if (message.startsWith("/d/")){
+            return message.split("/d/|/e/")[1];
         } else {
             return "ERROR: Problem with unpack message!";
         }
     }
 
+    public static String[] unpackOnlineUsers (String message){
+        String[] usersOnline = message.substring(3).split("/n/|/e/");
+        return usersOnline;
+    }
+
+    public static Type typeOf(String message){
+        if (message.startsWith("/m/")){
+            return Type.MESSAGE;
+        } else if (message.startsWith("/u/")){
+            return Type.USERS;
+        } else if (message.startsWith("/c/")){
+            return Type.CONNECTION;
+        } else if (message.startsWith("/d/")){
+            return Type.DISCONNECT;
+        } else {
+            return Type.NOTHING;
+        }
+    }
+
 }
+

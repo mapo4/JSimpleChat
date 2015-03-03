@@ -5,16 +5,19 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ServerMain {
 
     public static List<Socket> clients;
+    public static List<String> clientsOnline;
     private static final int PORT = 8195;
 
 
     public static void main(String[] args) {
         clients = new ArrayList<>();
+        clientsOnline = new LinkedList<>();
         ServerSocket serverSocket = null;
         Socket socket = null;
 
@@ -25,6 +28,8 @@ public class ServerMain {
             e.printStackTrace();
 
         }
+
+
 
         while(true){
             try {
@@ -38,4 +43,8 @@ public class ServerMain {
         }
 
     }
+
+    /*private static String usersOnlineToMessage(){
+        String message
+    }*/
 }
