@@ -11,7 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import pl.mapo.jsimplechat.client.Network;
 import pl.mapo.jsimplechat.client.model.Client;
-import pl.mapo.jsimplechat.client.Message;
+import pl.mapo.jsimplechat.lib.Message;
 
 import java.net.URL;
 import java.util.Arrays;

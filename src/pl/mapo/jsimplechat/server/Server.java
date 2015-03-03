@@ -1,11 +1,9 @@
 package pl.mapo.jsimplechat.server;
 
-import pl.mapo.jsimplechat.client.*;
-import sun.font.Type1GlyphMapper;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.stream.Collectors;
+import pl.mapo.jsimplechat.lib.Message;
 
 
 public class Server extends Thread {

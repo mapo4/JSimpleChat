@@ -1,4 +1,4 @@
-package pl.mapo.jsimplechat.client;
+package pl.mapo.jsimplechat.lib;
 
 public class Message {
     public enum Type {
