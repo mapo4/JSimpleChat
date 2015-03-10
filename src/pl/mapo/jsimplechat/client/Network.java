@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 
 
 public class Network{
@@ -36,7 +37,7 @@ public class Network{
             toServer = new DataOutputStream(clientSocket.getOutputStream());
             fromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Server disconnected.");
             return false;
         }
         return true;
@@ -56,6 +57,8 @@ public class Network{
                     toServer.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (NullPointerException e){
+                    return;
                 }
             }
         };

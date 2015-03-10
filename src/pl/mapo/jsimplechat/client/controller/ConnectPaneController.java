@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import pl.mapo.jsimplechat.client.model.Client;
 
 import java.net.URL;
@@ -63,11 +64,16 @@ public class ConnectPaneController implements Initializable {
 
         running = true;
         canceled = false;
+
         configureListView();
         configureButton();
         configureTextFields();
+        configureLabel();
     }
 
+    private void configureLabel(){
+        portLabel.setTextFill(Color.web("#DB2B2B"));
+    }
 
     private void configureListView(){
         serverListView.setItems(clientProperties);
@@ -131,7 +137,7 @@ public class ConnectPaneController implements Initializable {
             newValue.replaceAll("\\s","");
             if (newValue.matches("\\d*")) {
                 getSelectedItem().setServerPort(newValue);
-                portLabel.setText("Correct data.");
+                portLabel.setText("");
             }
             else {
                 portLabel.setText("Incorrect data!");

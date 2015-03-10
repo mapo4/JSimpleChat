@@ -9,10 +9,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import pl.mapo.jsimplechat.client.ClientMain;
 import pl.mapo.jsimplechat.client.model.Client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ClientPaneController implements Initializable{
@@ -26,11 +31,13 @@ public class ClientPaneController implements Initializable{
     private Thread thread;
     private volatile boolean running;
     private volatile boolean canceled;
+    public static List<String> nameClientsFormTabs;
     private Tab tab;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        nameClientsFormTabs = new ArrayList<>();
         configureMenu();
 
     }

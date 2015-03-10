@@ -16,6 +16,7 @@ import pl.mapo.jsimplechat.lib.Message;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class TabContentController implements Initializable{
 
@@ -34,13 +35,15 @@ public class TabContentController implements Initializable{
     private Network network;
     private Client client;
     private Thread listen;
+    private volatile boolean running;
     private ObservableList<String> clients;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         client = ConnectPaneController.getClient();
-
+        running = true;
+        ClientPaneController.nameClientsFormTabs.add(client.getName());
 
         configureTab();
         configureMessageTextField();
@@ -71,8 +74,10 @@ public class TabContentController implements Initializable{
         tab.setText(client.getServerName());
         tab.setOnClosed(event -> {
             network.send(Message.pack(client.getName(), Message.Type.DISCONNECT));
+            ClientPaneController.nameClientsFormTabs = ClientPaneController.nameClientsFormTabs.stream()
+                    .filter(t -> !t.startsWith(Message.unpack(client.getName()))).collect(Collectors.toList());
+            running = false;
             network.close();
-
         });
     }
 
@@ -81,16 +86,20 @@ public class TabContentController implements Initializable{
         listen = new Thread("Listen"){
             @Override
             public void run() {
-                while (true){
-                    String message = network.receive();
-                    if (Message.typeOf(message) == Message.Type.MESSAGE){
-                        Platform.runLater(() -> addNewClientMessage(Message.unpack(message)));
-                    } else if (Message.typeOf(message) == Message.Type.USERS){
-                        String[] users = Message.unpackOnlineUsers(message);
-                        clients = FXCollections.observableArrayList(Arrays.asList(users));
-                        Platform.runLater(() -> clientListView.setItems(clients));
-                    }
+                try {
+                    while (running){
+                        String message = network.receive();
+                        if (Message.typeOf(message) == Message.Type.MESSAGE){
+                            Platform.runLater(() -> addNewClientMessage(Message.unpack(message)));
+                        } else if (Message.typeOf(message) == Message.Type.USERS){
+                            String[] users = Message.unpackOnlineUsers(message);
+                            clients = FXCollections.observableArrayList(Arrays.asList(users));
+                            Platform.runLater(() -> clientListView.setItems(clients));
+                        }
 
+                    }
+                } catch (Exception e) {
+                    return;
                 }
             }
         };
